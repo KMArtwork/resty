@@ -1,0 +1,9 @@
+@import '/src/PokeColors.scss';
+
+section {
+  background-color: rgba($pokeBlack, 0.85);
+
+  pre {
+    color: $pokeRed;
+  }
+}

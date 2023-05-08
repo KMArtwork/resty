@@ -1,0 +1,9 @@
+@import '/src/PokeColors.scss';
+
+footer {
+  background: $pokeWhite;
+  border-top: 10px solid $pokeBlack;
+  padding: 1em 3em;
+  margin: 0;
+  text-align: center;
+}
