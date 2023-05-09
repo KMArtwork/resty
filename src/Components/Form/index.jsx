@@ -71,7 +71,7 @@ function Form (props) {
           <BootstrapForm.Label>Request Body</BootstrapForm.Label>
           <BootstrapForm.Control 
             as='textarea' 
-            rows={5} 
+            rows={20} 
             placeholder='{
             "key":"value"
             }'

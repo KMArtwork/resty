@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Container } from 'react-bootstrap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
@@ -30,10 +31,21 @@ function App (props) {
   return (
     <React.Fragment>
       <Header />
-      <div>Request Method: {requestParams.method}</div>
-      <div>URL: {requestParams.url}</div>
-      <Form handleApiCall={callApi} />
-      <Results data={data} />
+
+      <Container style={{display: 'flex', justifyContent: 'space-evenly', height: '100%'}}>
+
+        <Container style={{width: '50%'}}>
+          <Form handleApiCall={callApi} />          
+        </Container>
+
+        <Container style={{width: '50%'}}>
+          <div>Request Method: {requestParams.method}</div>
+          <div>URL: {requestParams.url}</div>
+          <Results data={data} />          
+        </Container>
+
+      </Container>
+
       <Footer />
     </React.Fragment>
   );
