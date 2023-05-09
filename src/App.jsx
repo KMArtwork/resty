@@ -19,11 +19,9 @@ function App (props) {
 
   const callApi = (requestParams) => {
     const data = {
-      count: 2,
-      results: [
-        {name: 'fake thing 1', url: 'http://fakethings.com/1'},
-        {name: 'fake thing 2', url: 'http://fakethings.com/2'},
-      ],
+      headers: requestParams.headers,
+      body: requestParams.body,
+      count: requestParams.count
     };
     setData(data);
     setRequestParams(requestParams)
