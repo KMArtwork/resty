@@ -70,7 +70,7 @@ function App (props) {
 
       </Container>
 
-      <Footer />
+      <Footer author={'Kawika Miller'} />
     </React.Fragment>
   );
 }
