@@ -7,13 +7,11 @@ import './Results.scss';
 function Results (props) {
   return (
     <section>
-      <pre>
-        {props.data ? 
-        // JSON.stringify(props.data, undefined, 2)
-        <JSONPretty data={props.data} theme={JSONPrettyMon} /> 
-        : 
-        'Loading...'}
-      </pre>
+      {props.data ? 
+      // JSON.stringify(props.data, undefined, 2)
+      <JSONPretty data={props.data} theme={JSONPrettyMon} /> 
+      : 
+      null}
     </section>
   );
 }

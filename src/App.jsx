@@ -56,13 +56,13 @@ function App (props) {
     <React.Fragment>
       <Header />
 
-      <Container style={{display: 'flex', justifyContent: 'space-evenly', height: '100%'}}>
+      <Container style={{display: 'flex', justifyContent: 'space-evenly', height: '80vh'}}>
 
         <Container style={{width: '50%'}}>
           <Form handleApiCall={callApi} />          
         </Container>
 
-        <Container style={{width: '50%', height: '85%', maxHeight: '85%'}}>
+        <Container style={{width: '50%', height: '95%', maxHeight: '95%'}}>
           <div>Request Method: {requestParams.method}</div>
           <div>URL: {requestParams.url}</div>
           <Results data={data} />          
