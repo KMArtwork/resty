@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Container } from 'react-bootstrap';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
 
 // Let's talk about using index.js and some other name in the component folder.
@@ -11,40 +13,42 @@ import Footer from './Components/Footer';
 import Form from './Components/Form';
 import Results from './Components/Results';
 
-class App extends React.Component {
+function App (props) {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: null,
-      requestParams: {},
-    };
-  }
+  const [data, setData] = useState(null);
+  const [requestParams, setRequestParams] = useState({});
 
-  callApi = (requestParams) => {
-    // mock output
+  const callApi = (requestParams) => {
     const data = {
-      count: 2,
-      results: [
-        {name: 'fake thing 1', url: 'http://fakethings.com/1'},
-        {name: 'fake thing 2', url: 'http://fakethings.com/2'},
-      ],
+      headers: requestParams.headers,
+      body: requestParams.body,
+      count: requestParams.count
     };
-    this.setState({data, requestParams});
+    setData(data);
+    setRequestParams(requestParams)
   }
 
-  render() {
-    return (
-      <React.Fragment>
-        <Header />
-        <div>Request Method: {this.state.requestParams.method}</div>
-        <div>URL: {this.state.requestParams.url}</div>
-        <Form handleApiCall={this.callApi} />
-        <Results data={this.state.data} />
-        <Footer />
-      </React.Fragment>
-    );
-  }
+  return (
+    <React.Fragment>
+      <Header />
+
+      <Container style={{display: 'flex', justifyContent: 'space-evenly', height: '100%'}}>
+
+        <Container style={{width: '50%'}}>
+          <Form handleApiCall={callApi} />          
+        </Container>
+
+        <Container style={{width: '50%'}}>
+          <div>Request Method: {requestParams.method}</div>
+          <div>URL: {requestParams.url}</div>
+          <Results data={data} />          
+        </Container>
+
+      </Container>
+
+      <Footer />
+    </React.Fragment>
+  );
 }
 
 export default App;
