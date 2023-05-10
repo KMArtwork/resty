@@ -1,6 +1,6 @@
 import React from 'react';
 import JSONPretty from 'react-json-pretty';
-import JSONPrettyMon from 'react-json-pretty/themes/monikai.css';
+import myTheme from '../../Style/myJsonTheme';
 
 import './Results.scss';
 
@@ -9,7 +9,7 @@ function Results (props) {
     <section>
       {props.data ? 
       // JSON.stringify(props.data, undefined, 2)
-      <JSONPretty data={props.data} theme={JSONPrettyMon} /> 
+      <JSONPretty data={props.data} theme={myTheme} /> 
       : 
       null}
     </section>

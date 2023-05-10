@@ -1,10 +1,10 @@
-@import '/src/PokeColors.scss';
+@import '/src/Style/ThemeColors.scss';
 
 header {
-  border-bottom: 10px solid $pokeBlack;
+  border-bottom: 2px solid $lightSeaGreen;
   color: $pokeWhite;
   padding: 0;
   margin: 0;
   text-align: center;
-  background-color: $pokeRed;
+  background-color: $charcoal;
 }

@@ -1,8 +1,8 @@
-@import '/src/PokeColors.scss';
+@import '/src/Style/ThemeColors.scss';
 
 footer {
-  background: $pokeWhite;
-  border-top: 10px solid $pokeBlack;
+  background: $charcoal;
+  border-top: 2px solid $lightSeaGreen;
   padding: 1em 3em;
   margin: 0;
   text-align: center;
