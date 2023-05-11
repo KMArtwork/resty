@@ -6,7 +6,7 @@ import './Results.scss';
 
 function Results (props) {
   return (
-    <section>
+    <section data-testid={'results'}>
       {props.data ? 
       // JSON.stringify(props.data, undefined, 2)
       <JSONPretty data={props.data} theme={myTheme} /> 
