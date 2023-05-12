@@ -13,6 +13,7 @@ import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Form from './Components/Form';
 import Results from './Components/Results';
+import History from './Components/History';
 
 function App (props) {
 
@@ -23,25 +24,19 @@ function App (props) {
   }
 
   const stateReducer = (state, action) => {
-
     switch(action.type) {
       case 'loading':
         return action.payload;
       case 'setResults':
         return action.payload;
       case 'loadHistory':
-        return;
+        return action.payload;
       default:
         return state;
     }
-
   }
 
   const [state, dispatch] = useReducer(stateReducer, initialState)
-
-  // const [data, setData] = useState(null);
-  // const [requestParams, setRequestParams] = useState({});
-
 
   const makeApiCall = (requestParams) => {
 
@@ -113,23 +108,39 @@ function App (props) {
     }
   }
 
+  const loadHistory = (idx) => {
+    dispatch({
+      type: 'loadHistory',
+      payload: {
+        loading: false,
+        results: state.history[idx],
+        history: state.history
+      }
+    })
+  }
+
   return (
-    <section data-testid={'app'}>
+    <section data-testid={'app'} style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
       <Header />
 
-      <Container style={{display: 'flex', justifyContent: 'space-evenly', height: '80vh'}}>
+      <Container style={{display: 'flex', justifyContent: 'space-evenly'}}>
 
         <Container style={{width: '50%'}}>
           <Form handleApiCall={handleApiCall} />          
         </Container>
 
-        <Container style={{width: '50%', height: '95%', maxHeight: '95%'}}>
-          <div>Request Method: {state.results?.request.method}</div>
-          <div>URL: {state.results?.request.url}</div>
-          <Results data={state.results} />          
+        <Container style={{width: '50%'}}>
+          <div style={{display: 'flex', justifyContent: 'space-between'}}>
+            <p>URL: {state.results?.request.url}</p>
+            <p>Request Method: {state.results?.request.method}</p>
+
+          </div>
+          <Results data={state.results} isLoading={state.loading} />          
         </Container>
 
       </Container>
+
+      <History data={state.history} loadHistory={loadHistory}/>
 
       <Footer author={'Kawika Miller'} />
     </section>
