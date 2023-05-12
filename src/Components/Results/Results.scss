@@ -1,9 +1,11 @@
-@import '/src/PokeColors.scss';
+@import '/src/Style/ThemeColors.scss';
 
 section {
-  background-color: rgba($pokeBlack, 0.85);
+  // background-color: rgba($pokeBlack, 0.85);
+  height: inherit;
+  overflow-y: scroll;
 
   pre {
-    color: $pokeRed;
+    // color: $pokeRed;
   }
 }
