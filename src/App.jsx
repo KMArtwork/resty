@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import axios from 'axios';
 
@@ -13,38 +13,94 @@ import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Form from './Components/Form';
 import Results from './Components/Results';
+import History from './Components/History';
 
 function App (props) {
 
-  const [data, setData] = useState(null);
-  const [requestParams, setRequestParams] = useState({});
+  let initialState = {
+    loading: false,
+    results: null,
+    history: [],
+  }
 
-  useEffect(
-    () => {
-      axios({
-        method: requestParams.method,
-        url: requestParams.url,
-        // headers: requestParams.headers,
-        data: requestParams.body
-      })
-      .then(response => {
-        setData(response);
-      })
-      .catch(error => {
-        console.error(error)
-      })
-    },
-    [requestParams]
-  )
+  const stateReducer = (state, action) => {
+    switch(action.type) {
+      case 'loading':
+        return action.payload;
+      case 'setResults':
+        return action.payload;
+      case 'loadHistory':
+        return action.payload;
+      default:
+        return state;
+    }
+  }
 
-  const callApi = (requestParams) => {
+  const [state, dispatch] = useReducer(stateReducer, initialState)
+
+  const makeApiCall = (requestParams) => {
+
+    // sets 'loading' to true while axios makes request
+    dispatch({
+      type: 'loading',
+      payload: {
+        loading: true,
+        results: state.results,
+        history: state.history
+      }
+    })
+
+    axios({
+      method: requestParams.method,
+      url: requestParams.url,
+      // headers: requestParams.headers,
+      data: requestParams.body
+    })
+    .then(response => {
+      dispatch({
+        type: 'setResults',
+        payload: {
+          loading: false,
+          results: {
+            request: {
+              method: requestParams.method,
+              url: requestParams.url,
+            },
+            response: response
+          },
+          history: [
+            {
+              request: {
+                method: requestParams.method,
+                url: requestParams.url,
+                headers: requestParams.headers,
+                body: requestParams.body,                
+              },
+              response: response,
+            }, 
+            ...state.history
+          ]
+        }
+      })
+    })
+    .catch(error => {
+      console.error(error)
+    })
+
+  }
+
+  const handleApiCall = (requestParams) => {
     // if the method is 'get' or 'delete' AND there is a url attached to the request
     if ((requestParams.method === 'GET' || requestParams.method === 'DELETE') && requestParams.url) {
-      setRequestParams(requestParams)
+
+      makeApiCall(requestParams);
+
     } 
     // if the method is 'post' or 'put' then the request also needs a url AND body
     else if ((requestParams.method === 'POST' || requestParams.method === 'PUT') && requestParams.url && requestParams.body) {
-      setRequestParams(requestParams)
+
+      makeApiCall(requestParams);
+
     } 
     // otherwise, console.error
     else {
@@ -52,26 +108,42 @@ function App (props) {
     }
   }
 
+  const loadHistory = (idx) => {
+    dispatch({
+      type: 'loadHistory',
+      payload: {
+        loading: false,
+        results: state.history[idx],
+        history: state.history
+      }
+    })
+  }
+
   return (
-    <React.Fragment>
+    <section data-testid={'app'} style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
       <Header />
 
-      <Container style={{display: 'flex', justifyContent: 'space-evenly', height: '80vh'}}>
+      <Container style={{display: 'flex', justifyContent: 'space-evenly'}}>
 
         <Container style={{width: '50%'}}>
-          <Form handleApiCall={callApi} />          
+          <Form handleApiCall={handleApiCall} />          
         </Container>
 
-        <Container style={{width: '50%', height: '95%', maxHeight: '95%'}}>
-          <div>Request Method: {requestParams.method}</div>
-          <div>URL: {requestParams.url}</div>
-          <Results data={data} />          
+        <Container style={{width: '50%'}}>
+          <div style={{display: 'flex', justifyContent: 'space-between'}}>
+            <p>URL: {state.results?.request.url}</p>
+            <p>Request Method: {state.results?.request.method}</p>
+
+          </div>
+          <Results data={state.results} isLoading={state.loading} />          
         </Container>
 
       </Container>
 
-      <Footer />
-    </React.Fragment>
+      <History data={state.history} loadHistory={loadHistory}/>
+
+      <Footer author={'Kawika Miller'} />
+    </section>
   );
 }
 

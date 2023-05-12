@@ -39,7 +39,6 @@ function Form (props) {
   }
 
   const handleSubmit = event => {
-    console.log(requestBody)
     event.preventDefault();
     const formData = {
       method: requestMethod,
@@ -55,7 +54,7 @@ function Form (props) {
   
   return (
     <>
-      <BootstrapForm onSubmit={handleSubmit}>
+      <BootstrapForm data-testid={'api-form'} onSubmit={handleSubmit}>
 
         {/* Url search bar */}
         <Container>
@@ -103,7 +102,7 @@ function Form (props) {
         </Container>       
         
         <Container style={{display: 'flex', justifyContent: 'center'}}>
-          <Button style={{margin:'0', width: '100%'}} type="submit">GO!</Button>           
+          <Button data-testid='form-submit-button' style={{margin:'0', width: '100%'}} type="submit">GO!</Button>           
         </Container>
 
 

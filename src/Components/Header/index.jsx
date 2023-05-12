@@ -4,7 +4,7 @@ import './Header.scss';
 
 function Header (props) {
   return (
-    <header>
+    <header data-testid="header">
       <h1>RESTy</h1>
     </header>
   );

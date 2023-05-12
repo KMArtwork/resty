@@ -1,17 +1,19 @@
 import React from 'react';
 import JSONPretty from 'react-json-pretty';
 import myTheme from '../../Style/myJsonTheme';
+import Loading from '../Loading';
 
 import './Results.scss';
 
 function Results (props) {
   return (
-    <section>
-      {props.data ? 
-      // JSON.stringify(props.data, undefined, 2)
-      <JSONPretty data={props.data} theme={myTheme} /> 
+    <section data-testid={'results'} style={{height: '75vh'}}>
+      {
+      props.isLoading ? 
+      <Loading />
       : 
-      null}
+      <JSONPretty data={props.data} theme={myTheme} /> 
+      }
     </section>
   );
 }
